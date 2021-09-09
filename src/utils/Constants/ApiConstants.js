@@ -1,0 +1,1 @@
+export const base_url = `https://backend.ustraa.com/rest/V1/api/`
