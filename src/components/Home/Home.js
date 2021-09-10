@@ -30,7 +30,7 @@ export default function Home() {
     const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
     const screen = useScreenSize();
-    const [viewMore, setViewMore] = useState(false)
+    const [initialLoad, setInitialLoad] = useState(true);
 
 
 
@@ -40,9 +40,9 @@ export default function Home() {
         const getHomeMenuCategories = async () => {
             const result = await getRequest(`homemenucategories/v1.0.1?device_type=mob`);
             setCategories(result.data?.category_list);
+            setProducts(result.data?.product_list?.products);
             setCategory({ id: result.data?.category_list[0].category_id, name: result.data?.category_list[0].category_name })
         }
-
         getHomeMenuCategories();
     }, [])
 
@@ -51,23 +51,18 @@ export default function Home() {
 
         const getProducts = async () => {
             const result = await getRequest(`catalog/v1.0.1?category_id=${category.id}`);
-            if (viewMore) {
-                setProducts(result.data?.products);
-
-            } else {
-                let firstThree = result.data?.products.filter((product, index) => index < 3);
-                setProducts(firstThree)
-            }
+            setProducts(result.data?.products);
         }
-        if (category.id !== null) {
+        if (category.id !== null && !initialLoad) {
             getProducts();
         }
-    }, [category.id, viewMore])
+    }, [category.id, initialLoad])
 
 
 
 
     const handleChange = (event, newValue, name) => {
+        setInitialLoad(false)
         setCategory({ id: newValue, name })
     };
 
@@ -129,8 +124,6 @@ export default function Home() {
             <Container value={category.id} index={category.id}>
                 <ProductList
                     products={products}
-                    setViewMore={setViewMore}
-                    viewMore={viewMore}
                     setCategories={setCategories}
                     categories={categories}
                     categoryValue={category.id}

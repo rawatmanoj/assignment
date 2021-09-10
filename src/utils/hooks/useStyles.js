@@ -43,10 +43,7 @@ export default makeStyles((theme) => {
             padding: theme.spacing(2, 4, 3),
         },
         grid: {
-            height: "200px",
-            padding: '10px',
-            margin: '0 auto',
-            marginBottom: '4rem'
+
         },
         wrapper: {
             display: 'flex', flexDirection: 'row', position: 'relative', justifyContent: 'center', height: '100%',
@@ -69,7 +66,7 @@ export default makeStyles((theme) => {
         viewMore: {
             width: '12rem', display: 'flex', marginLeft: "2rem"
         },
-        button: {
+        buttonStyles: {
             backgroundColor: '#4FCF64', color: 'white'
         }
     })

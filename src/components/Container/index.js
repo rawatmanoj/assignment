@@ -1,7 +1,8 @@
 import React from 'react'
 import Box from "@material-ui/core/Box";
-
+import useScreen from "../../utils/hooks/useScreenSize"
 export default function ContainerComp(props) {
+    const screen = useScreen();
     const { children, value, index, ...other } = props;
 
     return (
@@ -13,7 +14,7 @@ export default function ContainerComp(props) {
             {...other}
         >
             {value === index && (
-                <Box p={3}>
+                <Box p={screen.isMobile ? 0 : 3}>
                     {children}
                 </Box>
             )}
